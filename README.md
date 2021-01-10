@@ -4,7 +4,7 @@
 </p>
 
 
-[![Build Status](https://travis-ci.org/yiisoft/yii2-app-basic.svg?branch=master)](https://travis-ci.org/yiisoft/yii2-app-basic)
+[![Build Status](https://travis-ci.com/bitsnaps/yii2-travis-ci.svg?branch=master)](https://travis-ci.com/github/bitsnaps/yii2-travis-ci)
 
 
 TESTING

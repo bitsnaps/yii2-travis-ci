@@ -20,9 +20,7 @@ matrix:
     - php: 7.1
 
 install:
-  - travis_retry composer self-update
-  - travis_retry composer global require "fxp/composer-asset-plugin"
-  - travis_retry composer install --no-interaction --prefer-dist
+  - travis_retry composer update
 
 script:
   - vendor/bin/codecept run
