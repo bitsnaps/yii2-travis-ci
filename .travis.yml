@@ -24,12 +24,5 @@ install:
   - travis_retry composer global require "fxp/composer-asset-plugin"
   - travis_retry composer install --no-interaction --prefer-dist --no-dev
 
-before_script:
-  - composer update
-
 script:
-  - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
-
-after_script:
-  - wget https://scrutinizer-ci.com/ocular.phar
-  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+  - vendor/bin/codecept run
