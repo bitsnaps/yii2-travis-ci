@@ -11,6 +11,10 @@ php:
 services:
   - mysql
 
+# Email notifications (https://docs.travis-ci.com/user/notifications/)
+notifications:
+  email: false
+
 # cache composer cache
 cache:
   directories:
