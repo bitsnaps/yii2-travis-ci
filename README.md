@@ -111,9 +111,30 @@ vendor/bin/codecept run functional,unit -- --coverage-html --coverage-xml
 
 You can see code coverage output under the `tests/_output` directory.
 
+### Create a unit test:
+Create a test using `generate:test` command with a suite and test names as parameters:
+```
+php vendor/bin/codecept generate:test unit Example
+```
+It creates a new ExampleTest file located in the tests/unit directory.
+Notes that:
+- all public methods with test prefix are tests
+- `_before` method is executed before each test (like `setUp` in PHPUnit)
+- `_after` method is executed after each test (like `tearDown` in PHPUnit)
+
+#### Executing a unit test:
+You can run the newly created `ExampleTest` with this command:
+```
+php vendor/bin/codecept run unit ExampleTest
+```
+
 ### Create Cest files
 Functional tests should be written inside Cest files, which is a scenario-driven test format of Codeception. You can easily create a new test by running:
 ```
 ./vendor/bin/codecept g:cest functional MyNewScenarioCest
+```
 
+You can also create a Cest file by running the command:
+```
+php vendor/bin/codecept generate:cest suitename CestName
 ```
