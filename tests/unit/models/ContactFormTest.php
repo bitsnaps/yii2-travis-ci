@@ -45,4 +45,19 @@ class ContactFormTest extends \Codeception\Test\Unit
         expect($emailMessage->getSubject())->equals('very important letter subject');
         expect($emailMessage->toString())->contains('body of current message');
     }
+
+    /*public function testUserFixturesIsOk()
+    {
+      // load fixtures
+      $this->tester->haveFixtures([
+          'user' => [
+              'class' => UserFixture::className(),
+              // fixture data located in tests/_data/user.php
+              'dataFile' => codecept_data_dir() . 'user.php'
+          ]
+      ]);
+      // get first user from fixtures
+      $this->tester->grabFixture('user', 0);
+    }*/
+
 }
