@@ -110,3 +110,10 @@ vendor/bin/codecept run functional,unit -- --coverage-html --coverage-xml
 ```
 
 You can see code coverage output under the `tests/_output` directory.
+
+### Create Cest files
+Functional tests should be written inside Cest files, which is a scenario-driven test format of Codeception. You can easily create a new test by running:
+```
+./vendor/bin/codecept g:cest functional MyNewScenarioCest
+
+```
