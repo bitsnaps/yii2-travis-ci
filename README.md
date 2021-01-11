@@ -33,6 +33,10 @@ they perform testing in real browser.
 To execute acceptance tests do the following:  
 
 1. Rename `tests/acceptance.suite.yml.example` to `tests/acceptance.suite.yml` to enable suite configuration
+You can do this with the following command:
+```
+mv tests/acceptance.suite.yml.example tests/acceptance.suite.yml
+```
 
 2. Replace `codeception/base` package in `composer.json` with `codeception/codeception` to install full featured
    version of Codeception
@@ -79,6 +83,22 @@ To execute acceptance tests do the following:
     ```
     tests/bin/yii serve
     ```
+A Selenium Server will be started.
+
+Note:
+- For acceptance WebDriver module is used. Please check its reference to learn how to work with it. Unlike Yii2 module it does know nothing about your application, so if you want to use features of Yii like fixtures for acceptance testing, you should check that enable Yii2 module is enabled as well:
+```
+# config at tests/acceptance.yml
+modules:
+    enabled:
+        - WebDriver:
+            url: http://127.0.0.1:8080/
+            browser: firefox
+        - Yii2:
+            part: [orm, fixtures] # allow to use AR methods
+            cleanup: false # don't wrap test in transaction
+            entryScript: index-test.php
+```
 
 7. Now you can run all available tests
 
@@ -138,3 +158,32 @@ You can also create a Cest file by running the command:
 ```
 php vendor/bin/codecept generate:cest suitename CestName
 ```
+
+## Rest API Testing
+API tests are not included in any Yii templates so you need to set up them manually if you developing a web service. API testing is done at functional testing level but instead of testing HTML responses on user actions, they test requests and responses via protocols like REST or SOAP.
+You can create a suite test for API using this command:
+```
+./vendor/bin/codecept g:suite api
+```
+You will need to enable `REST`, `Yii2` module in `tests/api.suite.yml`:
+```
+class_name: ApiTester
+modules:
+    enabled:
+        - REST:
+            url: /api/v1
+            depends: Yii2
+        - \ApiBundle\Helper\Api
+    config:
+        - Yii2
+```
+Yii2 module actions like amOnPage or see should not be available for testing API. This is why Yii2 module is not enabled but declared with depends for REST module. Read more about from here [API-Testing](https://codeception.com/docs/10-APITesting#REST-API)
+
+## Acceptance test:
+Similar as for functional tests it is recommended to use Cest format for acceptance testing:
+```
+./vendor/bin/codecept g:cest acceptance MyNewScenarioCest
+```
+Read more about acceptance test from [Acceptance-Tests](https://codeception.com/docs/03-AcceptanceTests)
+
+More about testing with Yii2 can be found here [Yii2-Testing](https://codeception.com/for/yii)
