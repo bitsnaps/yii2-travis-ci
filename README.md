@@ -4,7 +4,7 @@
 </p>
 
 
-[![Build Status](https://travis-ci.com/bitsnaps/yii2-travis-ci.svg?token=yqPkBrU4E7xd57wLh2mu&branch=master)](https://travis-ci.com/bitsnaps/yii2-travis-ci)
+[![Build Status](https://travis-ci.com/bitsnaps/yii2-travis-ci.svg?branch=master)](https://travis-ci.com/bitsnaps/yii2-travis-ci)
 
 
 TESTING

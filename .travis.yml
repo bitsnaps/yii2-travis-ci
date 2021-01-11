@@ -27,7 +27,7 @@ before_install:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS todo_test;'
 
 install:
-  - composer install --no-interaction --prefer-dist
+  - composer update --no-interaction --prefer-dist
 
 script:
   - vendor/bin/codecept run
