@@ -1,0 +1,29 @@
+class_name: AcceptanceTester
+modules:
+    enabled:
+        - PhpBrowser:
+            url: http://localhost/yii2-travis-ci/web/
+        # - WebDriver:
+            # url: http://localhost/yii2-travis-ci/web/
+            # url: 'http://localhost:8080/' # cannot access file system (fails with ContactCest)
+            # host: '127.0.0.1' # Optional
+            # browser: chrome #firefox
+            # wait: 5 # Optional
+            # window_size: false # 1024x768 # 'maximize' # Optional
+            # clear_cookies: false
+            # port: 4444 # Optional
+            # restart: true # Optional
+            # capabilities:
+              # chromeOptions:
+                # w3c: false
+        - Yii2:
+            part: [orm, fixtures] # allow to use AR methods
+            entryScript: index-test.php
+            cleanup: false # don't wrap test in transaction
+        # - Db:
+        #     dsn: 'mysql:host=localhost;dbname=yii2_basic_tests'
+        #     user: 'root'
+        #     password: '1221'
+        #     cleanup: true # run populator before each test
+        #     populate: true # run populator before all test
+        #     populator: 'mysql -u $user -p$password $dbname < tests/_data/dump.sql'
