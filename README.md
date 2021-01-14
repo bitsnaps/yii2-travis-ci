@@ -28,7 +28,7 @@ tests are for testing user interaction. Acceptance tests are disabled by default
 they perform testing in real browser.
 
 
-### Running  acceptance tests
+### Running acceptance tests
 
 To execute acceptance tests do the following:  
 
@@ -115,6 +115,12 @@ modules:
 
 ### Code coverage support
 
+P.S. Before jump into coverage, make sure [xdebug](https://xdebug.org/) php's extension is installed (or just enabled in case of using software bundle like XAMPP).
+To find out if `xdebug` is installed run the following command:
+```
+php -v | grep -i xdebug
+```
+
 By default, code coverage is disabled by default in `codeception.yml` configuration file, but it's enabled in this example, you can comment out unnecessary rows to disable collecting code coverage.
 You can run your tests and collect coverage with the following command:
 
@@ -131,10 +137,7 @@ php vendor/bin/codecept run functional,unit --coverage --coverage-html --coverag
 
 You can see code coverage output under the `tests/_output` directory (for html report open `coverage/index.html` or `coverage-xml/index.html` for the xml).
 
-### WebDriver
-
-This scenario can be performed either by `PhpBrowser` (which is the detault in this example to speed up testing on travis) or by a "real" browser (only chrome tested in this repo) through `WebDriver`, you can find all the details in: `tests/acceptance.suite.yml`.
-
+Find out more about [Yii2-Code-Coverage](https://github.com/davibennun/yii2/blob/master/vendor/codeception/codeception/docs/11-Codecoverage.md).
 
 ### Create a unit test:
 Create a test using `generate:test` command with a suite and test names as parameters:
@@ -192,3 +195,7 @@ Similar as for functional tests it is recommended to use Cest format for accepta
 Read more about acceptance test from [Acceptance-Tests](https://codeception.com/docs/03-AcceptanceTests)
 
 More about testing with Yii2 can be found here [Yii2-Testing](https://codeception.com/for/yii)
+
+### Selenium for automated Browser testing
+
+This scenario can be performed either by `PhpBrowser` (which is the detault in this example to speed up testing on travis) or by a "real" browser (only chrome tested in this repo) through `WebDriver`, you can find all the details in: `tests/acceptance.suite.yml`.
