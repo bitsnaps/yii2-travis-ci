@@ -1,22 +1,22 @@
 class_name: AcceptanceTester
 modules:
     enabled:
-        - PhpBrowser:
+        # - PhpBrowser:
             # url: http://localhost/yii2-travis-ci/web/
-            url: http://localhost:8080
-        # - WebDriver:
-            # url: http://localhost/yii2-travis-ci/web/
+            # url: http://localhost:8080
+        - WebDriver:
+            url: http://localhost/yii2-travis-ci/web/
             # url: 'http://localhost:8080/' # cannot access file system (fails with ContactCest)
             # host: '127.0.0.1' # Optional
-            # browser: chrome #firefox
+            browser: chrome #firefox
             # wait: 5 # Optional
             # window_size: false # 1024x768 # 'maximize' # Optional
             # clear_cookies: false
             # port: 4444 # Optional
             # restart: true # Optional
-            # capabilities:
-              # chromeOptions:
-                # w3c: false
+            capabilities:
+              chromeOptions:
+                w3c: false
         - Yii2:
             part: [orm, fixtures] # allow to use AR methods
             entryScript: index-test.php
