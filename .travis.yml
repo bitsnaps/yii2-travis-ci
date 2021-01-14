@@ -37,4 +37,4 @@ before_script:
 
 script:
   - tests/bin/yii serve &
-  - vendor/bin/codecept run
+  - vendor/bin/codecept run --coverage --coverage-html

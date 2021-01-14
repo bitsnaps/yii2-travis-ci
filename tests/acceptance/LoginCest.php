@@ -15,7 +15,7 @@ class LoginCest
         $I->click('login-button');
 
         // there is no wait() with PhpBrowser
-        $I->wait(2); // wait for button to be clicked
+        // $I->wait(2); // wait for button to be clicked
 
         $I->expectTo('see user info');
         $I->see('Logout');
