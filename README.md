@@ -115,8 +115,8 @@ modules:
 
 ### Code coverage support
 
-By default, code coverage is disabled in `codeception.yml` configuration file, you should uncomment needed rows to be able
-to collect code coverage. You can run your tests and collect coverage with the following command:
+By default, code coverage is disabled by default in `codeception.yml` configuration file, but it's enabled in this example, you can comment out unnecessary rows to disable collecting code coverage.
+You can run your tests and collect coverage with the following command:
 
 ```
 #collect coverage for all tests
@@ -129,7 +129,12 @@ php vendor/bin/codecept run unit --coverage --coverage-html --coverage-xml
 php vendor/bin/codecept run functional,unit --coverage --coverage-html --coverage-xml
 ```
 
-You can see code coverage output under the `tests/_output` directory.
+You can see code coverage output under the `tests/_output` directory (for html report open `coverage/index.html` or `coverage-xml/index.html` for the xml).
+
+### WebDriver
+
+This scenario can be performed either by `PhpBrowser` (which is the detault in this example to speed up testing on travis) or by a "real" browser (only chrome tested in this repo) through `WebDriver`, you can find all the details in: `tests/acceptance.suite.yml`.
+
 
 ### Create a unit test:
 Create a test using `generate:test` command with a suite and test names as parameters:

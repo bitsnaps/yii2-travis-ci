@@ -11,6 +11,11 @@ php:
 services:
   - mysql
 
+# In case of issue with xdebug
+# env:
+#     global:
+#         - XDEBUG_MODE=coverage
+
 # Email notifications (https://docs.travis-ci.com/user/notifications/)
 notifications:
   email: false
