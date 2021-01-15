@@ -33,6 +33,10 @@ matrix:
   # allow_failures:
   #   - php: 7.1
 
+# Define an environment variable
+env:
+ - TRAVIS=true
+
 before_install:
   # - mysql -e 'CREATE DATABASE IF NOT EXISTS todo_test;'
   - psql -c 'create database todo_test;' -U postgres
