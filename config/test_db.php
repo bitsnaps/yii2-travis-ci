@@ -10,7 +10,7 @@ $DB_NAME = 'todo_test';
 if ( (getenv("CI") == 'true') /*&& (getenv("TRAVIS") == 'true' || getenv("TRAVIS") == 'travis-ci')*/ ) {
   // PostgreSQL
   $db['class'] = 'yii\db\Connection';
-  $db['dsn'] = 'pgsql:host=127.0.0.1:5432;dbname='.$DB_NAME;
+  $db['dsn'] = 'pgsql:host=localhost:5432;dbname='.$DB_NAME;
   $db['username'] = 'postgres';
   $db['password'] = '';
   $db['charset'] = 'utf8';
