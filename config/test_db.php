@@ -6,7 +6,7 @@ $db['class'] = 'yii\db\Connection';
 $db['dsn'] = 'pgsql:host=localhost;dbname=todo_test';
 $db['username'] = 'postgres';
 $db['password'] = '';
-$db['charset'] = 'utf8'
+$db['charset'] = 'utf8';
 
  // for travis-ci use: 'root' or 'travis' for less privileges.
 
