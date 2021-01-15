@@ -10,6 +10,7 @@ php:
 # Database service
 services:
   - mysql
+  - postgresql
 
 # In case of issue with xdebug
 # env:
