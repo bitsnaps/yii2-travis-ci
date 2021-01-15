@@ -3,9 +3,9 @@ os:
   - linux
 dist: trusty
 php:
-  - '5.4'
+  # - '5.4'
   - '5.6'
-  - '7.1'
+  # - '7.1'
 
 # Database service
 services:
@@ -30,11 +30,13 @@ cache:
 # http://docs.travis-ci.com/user/build-configuration/#Rows-That-are-Allowed-To-Fail
 matrix:
   fast_finish: true
-  allow_failures:
-    - php: 7.1
+  # allow_failures:
+  #   - php: 7.1
 
 before_install:
   # - mysql -e 'CREATE DATABASE IF NOT EXISTS todo_test;'
+  - php -r 'echo "CI: ".getenv("CI");'
+  - php -r 'echo "TRAVIS: ".getenv("TRAVIS");'
   - psql -c 'create database todo_test;' -U postgres
   - sudo apt-get -y install git zip php5-cli php5-curl
 
@@ -43,6 +45,7 @@ before_script:
   - composer install --no-interaction --prefer-dist
 
 script:
-  - psql -c "SELECT version();" 
+  # - psql -c "SELECT version();"
   - tests/bin/yii serve &
-  - vendor/bin/codecept run --coverage --coverage-html
+  - vendor/bin/codecept run functional
+  # - vendor/bin/codecept run --coverage --coverage-html
