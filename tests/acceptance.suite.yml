@@ -2,8 +2,8 @@ class_name: AcceptanceTester
 modules:
     enabled:
         - PhpBrowser:
-            url: http://localhost/yii2-travis-ci/web/ # doesn't work on travis-ci
-            # url: http://localhost:8080
+            # url: http://localhost/yii2-travis-ci/web/ # doesn't work on travis-ci
+            url: http://localhost:8080
         # - WebDriver:
         #     url: http://localhost/yii2-travis-ci/web/
             # url: 'http://localhost:8080/' # cannot access file system (fails with ContactCest)

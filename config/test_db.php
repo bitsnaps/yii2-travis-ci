@@ -7,8 +7,9 @@ $db = require __DIR__ . '/db.php';
 
 $DB_NAME = 'todo_test';
 
-if ( getenv("TRAVIS") == 'true' ){
-  // PostgreSQL
+if ( getenv("TRAVIS") == 'true' ){ // this check doesn't work for me
+
+  // PostgreSQL (working correctly on travis)
   $db['class'] = 'yii\db\Connection';
   $db['dsn'] = 'pgsql:host=localhost:5432;dbname='.$DB_NAME;
   $db['username'] = 'postgres';
