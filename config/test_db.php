@@ -7,7 +7,7 @@ $db = require __DIR__ . '/db.php';
 
 $DB_NAME = 'todo_test';
 
-if ( (getenv("CI") == 'true') /*&& (getenv("TRAVIS") == 'true' || getenv("TRAVIS") == 'travis-ci')*/ ) {
+if ( (getenv("CI") == true) && (getenv("TRAVIS") == true) ){
   // PostgreSQL
   $db['class'] = 'yii\db\Connection';
   $db['dsn'] = 'pgsql:host=localhost:5432;dbname='.$DB_NAME;
