@@ -1,5 +1,5 @@
-REM for Firefox (not working for me)
-REM java -jar -Dwebdriver.gecko.driver=/full/path/to/selenium/geckodriver /full/path/to/selenium-server-standalone-3.141.59.jar
+REM for Firefox (not tested on windows)
+REM java -jar -Dwebdriver.gecko.driver=%SELENIUM%/geckodriver %SELENIUM%/selenium-server-standalone-3.141.59.jar
 
 REM for Google Chrome
-java -jar -Dwebdriver.chrome.driver=C:/full/path/to/selenium/chromedriver.exe c:/full/path/to/selenium/selenium-server-standalone-3.141.59.jar
+java -jar -Dwebdriver.chrome.driver=%SELENIUM%/chromedriver.exe %SELENIUM%/selenium-server-standalone-3.141.59.jar

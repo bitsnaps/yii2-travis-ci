@@ -68,6 +68,7 @@ mv tests/acceptance.suite.yml.example tests/acceptance.suite.yml
     ```
     docker run --net=host selenium/standalone-firefox:2.53.0
     ```
+P.S. You can use the `acceptance.sh` (or `acceptance.bat` for windows) to run selenium server on real (chrome) browser (you must define :`SELENIUM` environment variable).
 
 5. (Optional) Create `yii2_basic_tests` database and update it by applying migrations if you have them.
 
