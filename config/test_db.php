@@ -5,7 +5,7 @@ $db = require __DIR__ . '/db.php';
 
 // for travis-ci use: 'root' or 'travis' for less privileges.
 
-if (getenv("CI") == "true") /*&& (getenv("TRAVIS") == "true"*/ {
+if ( (getenv("CI") == 'true') && (getenv("TRAVIS") == 'true' || getenv("TRAVIS") == 'travis-ci') ) {
   // PostgreSQL
   $db['class'] = 'yii\db\Connection';
   $db['dsn'] = 'pgsql:host=localhost:5432;dbname=todo_test';
