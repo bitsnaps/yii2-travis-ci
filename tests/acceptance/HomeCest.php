@@ -12,8 +12,11 @@ class HomeCest
         $I->seeLink('About');
         $I->click('About');
 
-        // there is no wait() with PhpBrowser
-        // $I->wait(2); // wait for page to be opened
+        try {
+          // there is no wait() with PhpBrowser
+          $I->wait(2); // wait for page to be opened
+        } catch (\Exception $e) {
+        }
 
         $I->see('This is the About page.');
     }

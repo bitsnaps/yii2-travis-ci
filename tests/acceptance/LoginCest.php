@@ -14,8 +14,11 @@ class LoginCest
         $I->fillField('input[name="LoginForm[password]"]', 'admin');
         $I->click('login-button');
 
-        // there is no wait() with PhpBrowser
-        // $I->wait(2); // wait for button to be clicked
+        try {
+          // there is no wait() with PhpBrowser
+          $I->wait(2); // wait for button to be clicked
+        } catch (\Exception $e) {
+        }
 
         $I->expectTo('see user info');
         $I->see('Logout');
