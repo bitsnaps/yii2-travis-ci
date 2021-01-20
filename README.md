@@ -205,3 +205,131 @@ This scenario can be performed either by `PhpBrowser` (which is the detault in t
 ## Fixtures
 The fixture data for an `ActiveFixture` is usually provided in a file located at `fixturepath/data/tablename.php`, where `fixturepath` stands for the directory containing the fixture class file, and `tablename` is the name of the table associated with the fixture. In this example the file can be found at `@app/tests/fixtures/data/user.php`.
 This example uses `UserFixtures`, to create dummy users for testing data. The default tests examples has been updated to work according to `User` model.
+Fixture classes should be suffixed by `Fixture`. By default fixtures will be searched under `tests\unit\fixtures` namespace, you can change this behavior with `config` or command options. You can exclude some fixtures due load or unload by specifying `-` before its name like `-User`.
+To load fixture, run the following command:
+```
+yii fixture/load <fixture_name>
+
+# Example to load UserFixtures
+yii fixture/load User
+
+# or (beause "load" is the default command)
+yii fixture User
+
+# load several fixtures
+yii fixture "User, UserProfile"
+
+# load all fixtures
+yii fixture/load "*"
+yii fixture "*"
+
+# load all fixtures except UserProfile
+yii fixture "*, -UserProfile"
+
+# load fixtures, but search them in different namespace. By default namespace is: `tests\unit\fixtures`.
+yii fixture User --namespace='alias\my\custom\namespace'
+
+# load global fixture `some\name\space\CustomFixture` before other fixtures will be loaded.
+# By default this option is set to `InitDbFixture` to disable/enable integrity checks. You can specify several
+# global fixtures separated by comma.
+yii fixture User --globalFixtures='some\name\space\Custom'
+```
+
+To unload fixture, run the following command:
+```
+# unload Users fixture, by default it will clear fixture storage (for example "users" table, or "users" collection if this is mongodb fixture).
+yii fixture/unload User
+
+# Unload several fixtures
+yii fixture/unload "User, UserProfile"
+
+# unload all fixtures
+yii fixture/unload "*"
+
+# unload all fixtures except ones
+yii fixture/unload "*, -DoNotUnloadThisOne"
+```
+Same command options like: namespace, globalFixtures also can be applied to this command.
+
+### Fixture: Configure Command Globally
+You can configure different fixture path globally as follows:
+```
+'controllerMap' => [
+    'fixture' => [
+        'class' => 'yii\console\controllers\FixtureController',
+        'namespace' => 'myalias\some\custom\namespace',
+        'globalFixtures' => [
+            'some\name\space\Foo',
+            'other\name\space\Bar'
+        ],
+    ],
+]
+```
+
+## Yii2-Faker (Auto-generating fixtures)
+
+Yii also can auto-generate fixtures for you based on predefined a template file. You can generate your fixtures with different data on different languages and formats. This feature is done by Faker library used by `yii2-faker` extension.
+
+### Yii2-Faker: Basic Usage:
+Make sure you have `"yiisoft/yii2-faker": "~2.0.0"` in your `composer.json` packages, you'll then need to activate this extension, simply add (or uncomment) the following code in your application configuration (in `console.php`):
+```
+'controllerMap' => [
+    'fixture' => [
+        'class' => 'yii\faker\FixtureController',
+    ],
+],
+```
+Now, you'll see the faker commands (`fixture/generate`,`fixture/generate-all`...) if you run `yii` command from terminal.
+
+You can make your own faker from `Faker\Factory::create()` to create and initialize a faker generator, which can generate data by accessing properties named after the type of data you want, here is an example:
+```
+// generate data by accessing properties
+echo $faker->name;
+  // 'Lucy Cechtelar';
+```
+
+## Testing with Yii2-Faker commands
+Define a tests alias in your console config. For example, for the basic project template, this should be added to the `console.php` configuration: `Yii::setAlias('tests', dirname(__DIR__) . '/tests/codeception');` To start using this command you need to be familiar (Read [Faker Guide](https://github.com/fzaninotto/Faker)) with the Faker library and generate fixture template files, according to the given format:
+```
+// users.php file under the template path (by default @tests/unit/templates/fixtures)
+/**
+ * @var $faker \Faker\Generator
+ * @var $index integer
+ */
+return [
+    'name' => $faker->firstName,
+    'phone' => $faker->phoneNumber,
+    'city' => $faker->city,
+    'password' => Yii::$app->getSecurity()->generatePasswordHash('password_' . $index),
+    'auth_key' => Yii::$app->getSecurity()->generateRandomString(),
+    'bio' => $faker->sentence(7, true),  // generate a sentence with 7 words
+];
+```
+When you run the `fixture/generate` command, the script will be executed once for every data row being generated
+
+```
+# list all templates under the default template path (i.e. '@tests/unit/templates/fixtures')
+php yii fixture/templates
+
+# list all templates under the specified template path
+php yii fixture/templates --templatePath='@app/path/to/my/custom/templates'
+
+# generate fixtures from users fixture template
+php yii fixture/generate users
+
+# to generate several fixture data files
+php yii fixture/generate users profiles teams
+
+# You can specify how many fixtures per file you need by the --count option
+php yii fixture/generate-all --count=3
+
+# generate fixtures in russian language
+php yii fixture/generate users --count=5 --language="ru_RU"
+
+# read templates from the other path
+php yii fixture/generate-all --templatePath='@app/path/to/my/custom/templates'
+
+# generate fixtures into other directory.
+php yii fixture/generate-all --fixtureDataPath='@tests/acceptance/fixtures/data'
+```
+Read more: https://github.com/yiisoft/yii2-faker/blob/master/docs/guide/basic-usage.md

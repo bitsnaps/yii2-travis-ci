@@ -28,13 +28,13 @@ $config = [
         'db' => $db,
     ],
     'params' => $params,
-    /*
+
     'controllerMap' => [
         'fixture' => [ // Fixture generation command line.
             'class' => 'yii\faker\FixtureController',
         ],
     ],
-    */
+
 ];
 
 if (YII_ENV_DEV) {
@@ -43,6 +43,9 @@ if (YII_ENV_DEV) {
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
     ];
+
+    // for fixture generator using yii2-faker extension
+    Yii::setAlias('tests', dirname(__DIR__) . '/tests/codeception');
 }
 
 return $config;
