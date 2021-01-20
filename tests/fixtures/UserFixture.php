@@ -14,6 +14,6 @@ class UserFixture extends ActiveFixture
     public $modelClass = User::class;
 
     // if UserFixture depends on other fixture
-    // public $depends = ['app\tests\fixtures\AbstractUserFixture'];
+    // public $depends = ['app\tests\fixtures\BaseUserFixture'];
 
 }

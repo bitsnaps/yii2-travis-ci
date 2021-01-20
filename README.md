@@ -200,3 +200,8 @@ More about testing with Yii2 can be found here [Yii2-Testing](https://codeceptio
 ### Selenium for automated Browser testing
 
 This scenario can be performed either by `PhpBrowser` (which is the detault in this example to speed up testing on travis) or by a "real" browser (only chrome tested in this repo) through `WebDriver`, you can find all the details in: `tests/acceptance.suite.yml`.
+
+
+## Fixtures
+The fixture data for an `ActiveFixture` is usually provided in a file located at `fixturepath/data/tablename.php`, where `fixturepath` stands for the directory containing the fixture class file, and `tablename` is the name of the table associated with the fixture. In this example the file can be found at `@app/tests/fixtures/data/user.php`.
+This example uses `UserFixtures`, to create dummy users for testing data. The default tests examples has been updated to work according to `User` model.
