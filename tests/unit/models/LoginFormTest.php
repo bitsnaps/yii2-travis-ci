@@ -3,10 +3,21 @@
 namespace tests\unit\models;
 
 use app\models\LoginForm;
+use app\tests\fixtures\UserFixture;
 
 class LoginFormTest extends \Codeception\Test\Unit
 {
     private $model;
+
+    // Fixtures are needed here
+    public function _fixtures()
+    {
+      return [
+        'users' => [
+          'class' => UserFixture::class,
+        ]
+      ];
+    }
 
     protected function _after()
     {
@@ -39,8 +50,8 @@ class LoginFormTest extends \Codeception\Test\Unit
     public function testLoginCorrect()
     {
         $this->model = new LoginForm([
-            'username' => 'demo',
-            'password' => 'demo',
+            'username' => 'admin',
+            'password' => 'admin',
         ]);
 
         expect_that($this->model->login());

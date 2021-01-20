@@ -1,10 +1,27 @@
 <?php
 
+use app\tests\fixtures\UserFixture;
+
 class LoginFormCest
 {
+    // Fixtures are needed here
+    public function _fixtures()
+    {
+      return [
+        'users' => [
+          'class' => UserFixture::class,
+        ]
+      ];
+    }
+
     public function _before(\FunctionalTester $I)
     {
+        $users = $I->grabFixture('users');
         $I->amOnRoute('site/login');
+    }
+
+    public function _after(\FunctionalTester $I)
+    {
     }
 
     public function openLoginPage(\FunctionalTester $I)
@@ -16,7 +33,7 @@ class LoginFormCest
     // demonstrates `amLoggedInAs` method
     public function internalLoginById(\FunctionalTester $I)
     {
-        $I->amLoggedInAs(100);
+        $I->amLoggedInAs(1);
         $I->amOnPage('/');
         $I->see('Logout (admin)');
     }
@@ -54,6 +71,6 @@ class LoginFormCest
             'LoginForm[password]' => 'admin',
         ]);
         $I->see('Logout (admin)');
-        $I->dontSeeElement('form#login-form');              
+        $I->dontSeeElement('form#login-form');
     }
 }

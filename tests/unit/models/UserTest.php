@@ -3,9 +3,20 @@
 namespace tests\unit\models;
 
 use app\models\User;
+use app\tests\fixtures\UserFixture;
 
 class UserTest extends \Codeception\Test\Unit
 {
+    // Fixtures are needed here
+    public function _fixtures()
+    {
+      return [
+        'users' => [
+          'class' => UserFixture::class,
+        ]
+      ];
+    }
+
 
   // Dependency Injection example (for more details see: https://codeception.com/docs/07-AdvancedUsage#Cest-Classes)
     /*
@@ -39,7 +50,7 @@ class UserTest extends \Codeception\Test\Unit
 
     public function testFindUserById()
     {
-        // expect_that($user = User::findIdentity(100));
+        // expect_that($user = User::findIdentity(1));
         expect_that($user = User::find()->one());
         expect($user->username)->equals('admin');
 
@@ -48,7 +59,7 @@ class UserTest extends \Codeception\Test\Unit
 
     public function testFindUserByAccessToken()
     {
-        $admin = $user = User::find()->one();
+        $admin = User::find()->one();
         expect_that($user = User::findIdentityByAccessToken($admin->access_token));
         expect($user->username)->equals('admin');
 

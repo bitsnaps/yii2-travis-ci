@@ -1,9 +1,30 @@
 <?php
 
 use yii\helpers\Url;
+use app\tests\fixtures\UserFixture;
 
 class LoginCest
 {
+
+    // Fixtures are needed here
+    public function _fixtures()
+    {
+      return [
+        'users' => [
+          'class' => UserFixture::class,
+        ]
+      ];
+    }
+
+    public function _before(\FunctionalTester $I)
+    {
+        $users = $I->grabFixture('users');
+    }
+
+    public function _after(\FunctionalTester $I)
+    {
+    }
+
     public function ensureThatLoginWorks(AcceptanceTester $I)
     {
         $I->amOnPage(Url::toRoute('/site/login'));
