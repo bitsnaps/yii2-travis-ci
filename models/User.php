@@ -2,9 +2,20 @@
 
 namespace app\models;
 
-class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
+
+/**
+ * This is the model class for table "user".
+ *
+ * @property integer $id @column pk
+ * @property string $username @column string(255)|unique|notNull
+ * @property string $password_hash @column string(255)|notNull
+ * @property string $auth_key @column string(32)|notNull
+ * @property string $access_token @column string(255)|notNull
+ * @property int $status
+ */
+class User extends \yii\db\ActiveRecord /*base\BaseObject*/ implements \yii\web\IdentityInterface
 {
-    public $id;
+/*    public $id;
     public $username;
     public $password;
     public $authKey;
@@ -26,14 +37,43 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
             'accessToken' => '101-token',
         ],
     ];
+*/
 
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['username', 'password_hash', 'access_token'], 'required'],
+            [['status'], 'integer'],
+            [['username'], 'string', 'max' => 50],
+            [['password_hash', 'auth_key', 'access_token'], 'string', 'max' => 255]
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => \Yii::t('app', 'ID'),
+            'username' => \Yii::t('app', 'Username'),
+            'password_hash' => \Yii::t('app', 'Password'),
+            'status' => \Yii::t('app', 'Status'),
+            'auth_key' => \Yii::t('app', 'Auth Key'),
+            'access_token' => \Yii::t('app', 'Access Token'),
+        ];
+    }
 
     /**
      * {@inheritdoc}
      */
     public static function findIdentity($id)
     {
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+        // return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+        return static::findOne($id);
     }
 
     /**
@@ -41,13 +81,17 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        foreach (self::$users as $user) {
+        /*foreach (self::$users as $user) {
             if ($user['accessToken'] === $token) {
                 return new static($user);
             }
+        }*/
+        $user = static::findOne(['access_token' => $token]);
+        if ($user){
+            return $user;
         }
-
         return null;
+
     }
 
     /**
@@ -58,10 +102,15 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
      */
     public static function findByUsername($username)
     {
-        foreach (self::$users as $user) {
+/*        foreach (self::$users as $user) {
             if (strcasecmp($user['username'], $username) === 0) {
                 return new static($user);
             }
+        }
+*/
+        $user = static::findOne(['username' => $username]);
+        if ($user){
+            return $user;
         }
 
         return null;
@@ -80,7 +129,7 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
      */
     public function getAuthKey()
     {
-        return $this->authKey;
+        return $this->auth_key;
     }
 
     /**
@@ -88,7 +137,7 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
      */
     public function validateAuthKey($authKey)
     {
-        return $this->authKey === $authKey;
+        return $this->getAuthKey() === $authKey;
     }
 
     /**
@@ -99,6 +148,21 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
      */
     public function validatePassword($password)
     {
-        return $this->password === $password;
+        // return $this->password === $password;
+        return \Yii::$app->security->validatePassword($password, $this->password_hash);
     }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            if ($this->isNewRecord) {
+                $this->auth_key = \Yii::$app->security->generateRandomString();
+                // CAUTION: this should be set and validated by sending an email to the user
+                // $this->access_token = \Yii::$app->security->generateRandomString();
+            }
+            return true;
+        }
+        return false;
+    }
+
 }
