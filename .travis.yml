@@ -45,6 +45,7 @@ before_script:
 
 script:
   # - psql -c "SELECT version();"
+  - ./yii migrate --interactive=0
   - ./tests/bin/yii migrate --interactive=0
   - tests/bin/yii serve &
   # - vendor/bin/codecept run functional
