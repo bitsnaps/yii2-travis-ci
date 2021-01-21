@@ -45,7 +45,7 @@ class User extends \yii\db\ActiveRecord /*base\BaseObject*/ implements \yii\web\
     public function rules()
     {
         return [
-            [['username', 'password_hash', 'access_token'], 'required'],
+            [['username', 'password_hash', 'access_token', 'status'], 'required'],
             [['status'], 'integer'],
             [['username'], 'string', 'max' => 50],
             [['password_hash', 'auth_key', 'access_token'], 'string', 'max' => 255]
