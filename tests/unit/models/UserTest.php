@@ -2,6 +2,7 @@
 
 namespace tests\unit\models;
 
+use Yii;
 use app\models\User;
 use app\tests\fixtures\UserFixture;
 
@@ -47,6 +48,25 @@ class UserTest extends \Codeception\Test\Unit
         ]);
     }
     */
+
+    public function testUserValidation()
+    {
+      $user = new User();
+
+      // Username cannot be null
+      $user->username = null;
+      $this->assertFalse($user->validate(['username']));
+      $user->username = Yii::$app->security->generateRandomString(51); // very long username
+      $this->assertFalse($user->validate(['username']));
+      $user->username = 'admin'; // valid username
+      $this->assertTrue($user->validate(['username']));
+
+      // status is integer
+      $user->status = 'text';
+      $this->assertFalse($user->validate(['status']));
+      $user->status = 0; // valid status value
+      $this->assertTrue($user->validate(['status']));
+    }
 
     public function testFindUserById()
     {
